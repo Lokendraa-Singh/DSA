@@ -1,7 +1,8 @@
 class Solution {
 public:
     int maxWidthRamp(vector<int>& nums) {
-
+        
+        //two pointer app
         int n = nums.size();
         vector<int> maxArray(n);
 
