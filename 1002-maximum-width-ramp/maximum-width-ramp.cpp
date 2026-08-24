@@ -1,30 +1,24 @@
 class Solution {
 public:
     int maxWidthRamp(vector<int>& nums) {
-        
-        //two pointer app
-        int n = nums.size();
-        vector<int> maxArray(n);
 
-        maxArray[n - 1] = nums[n - 1];
-
-        for (int i = n - 2; i >= 0; i--) {
-            maxArray[i] = max(maxArray[i + 1], nums[i]);
-        }
-
-        int i = 0;
-        int j = 0;
+        // monotonic decreasing stack
+        stack<int> st;
         int ans=INT_MIN;
 
-        while (i < n && j < n) {
-            if (nums[i] <= maxArray[j]) {
-                ans = max(ans, j - i);
-                j++;
-            } else {
-                i++;
+        for (int i = 0; i < nums.size(); i++) {
+            if (st.empty() || nums[st.top()] >= nums[i]) {
+                st.push(i);
             }
         }
 
+        for (int i = nums.size() - 1; i >= 0; i--) {
+
+            while (!st.empty() && nums[st.top()] <= nums[i]) {
+                ans = max(ans, i - st.top());
+                st.pop();
+            }
+        }
         return ans;
     }
 };
