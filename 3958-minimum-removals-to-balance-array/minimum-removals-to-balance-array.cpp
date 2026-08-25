@@ -2,9 +2,9 @@ class Solution {
 public:
     int minRemoval(vector<int>& nums, int k) {
 
-        int i = 0;
-        int j = i+1;
-        int ans=1;
+        long long i = 0;
+        long long j = i+1;
+        long long ans=1;
         sort(nums.begin(), nums.end());
 
         while (i < nums.size() && j<nums.size()) {
