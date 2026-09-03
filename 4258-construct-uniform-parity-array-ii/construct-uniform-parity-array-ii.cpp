@@ -39,7 +39,8 @@ public:
                 st.push(nums1[i]);
             }
         }
-
+        
+        // change only even no. to odd no.
         for (int i = 0; i < nums1.size(); i++) {
 
             if (nums1[i] % 2 == 0) {
@@ -56,6 +57,8 @@ public:
                 nums2[i] = nums1[i];
             }
         }
+
+        //check only odd no.
         temp = true;
         for (int i = 0; i < nums2.size(); i++) {
             if (nums2[i] % 2 == 0) {
