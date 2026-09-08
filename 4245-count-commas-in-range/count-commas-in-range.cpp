@@ -6,7 +6,7 @@ public:
             return 0;
         }
 
-        if(n==100000){
+        if (n == 100000) {
             return 99001;
         }
 
