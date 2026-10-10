@@ -1,14 +1,21 @@
 class Solution {
 public:
+    void BFS(unordered_map<int, vector<int>>& adj, int u,
+             vector<bool>& visited) {
 
-    void DFS(unordered_map<int, vector<int>> &adj,int u,vector<bool>&visited){
+        queue<int> q;
+        visited[u] = true;
+        q.push(u);
 
-        visited[u]=true;
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
 
-        for(int &v:adj[u]){
+            for (int& v : adj[u]) {
 
-            if(!visited[v]){
-                DFS(adj,v,visited);
+                if (!visited[v]) {
+                    BFS(adj,v,visited);
+                }
             }
         }
     }
@@ -33,7 +40,7 @@ public:
         int count = 0; // provinces ko count krne ke liye
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
-                DFS(adj, i, visited);
+                BFS(adj, i, visited);
                 count++;
             }
         }
