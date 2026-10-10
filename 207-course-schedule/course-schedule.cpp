@@ -1,9 +1,10 @@
 class Solution {
 public:
+    // USE BFS kahn algo --> find topo sort agr nikla or uska size numCourse ke
+    // barbr hh toh true nhi false
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 
         unordered_map<int, vector<int>> adj;
-
         for (auto& prerequisite : prerequisites) {
 
             int u = prerequisite[0];
