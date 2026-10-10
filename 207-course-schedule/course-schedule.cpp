@@ -1,7 +1,26 @@
 class Solution {
 public:
-    // USE BFS kahn algo --> find topo sort agr nikla or uska size numCourse ke
-    // barbr hh toh true nhi false
+    // USE DFS for check cycle in directed graph
+
+    bool isCyclePresent(unordered_map<int, vector<int>> &adj, int u, vector<bool>& visited,
+             vector<bool>& inRecursion) {
+
+        visited[u] = true;
+        inRecursion[u] = true;
+
+        for (int &v : adj[u]) {
+
+            if (!visited[v] && isCyclePresent(adj, v, visited, inRecursion)) {
+                return true;  // cycle toh hh
+            } else if (inRecursion[v] == true) {
+                return true;
+            }
+        }
+
+        inRecursion[u]=false;
+
+        return false;
+    }
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 
         unordered_map<int, vector<int>> adj;
@@ -13,37 +32,16 @@ public:
             adj[v].push_back(u);
         }
 
-        vector<int> indegree(numCourses, 0);
-        queue<int> q;
-
-        for (int u = 0; u < numCourses; u++) {
-
-            for (int& v : adj[u]) {
-                indegree[v]++;
-            }
-        }
+        vector<bool> visited(numCourses, false);
+        vector<bool> inRecursion(numCourses, false);
 
         for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0) {
-                q.push(i);
+
+            if (!visited[i] && isCyclePresent(adj, i, visited, inRecursion)) {
+                return false; // course complete nhi kr skte
             }
         }
 
-        vector<int> result;
-        while (!q.empty()) {
-            int u = q.front();
-            result.push_back(u);
-            q.pop();
-
-            for (int v : adj[u]) {
-                indegree[v]--;
-
-                if (indegree[v] == 0) {
-                    q.push(v);
-                }
-            }
-        }
-
-        return numCourses == result.size();
+        return true;
     }
 };
