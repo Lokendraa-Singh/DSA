@@ -1,24 +1,34 @@
 class Solution {
 public:
-    bool DFS(vector<vector<int>>& graph, int currNode, vector<int>& color,
+    bool BFS(vector<vector<int>>& graph, int currNode, vector<int>& color,
              int currColor) {
+
+        queue<pair<int, int>> q;
+        q.push({currNode, currColor});
+
         color[currNode] = currColor;
 
-        for (int& v : graph[currNode]) {
-            if (color[v] == color[currNode]) {
-                return false;
-            }
+        while (!q.empty()) {
+            pair<int, int> P = q.front();
+            q.pop();
 
-            if (color[v] == -1) {
-                if (color[currNode] == 1) {
-                    color[v] = 0;
-                } else if (color[currNode] == 0) {
-                    color[v] = 1;
+            int u = P.first;
+            int uColor = P.second;
+
+            for (int& v : graph[u]) {
+
+                if (color[v] == color[u]) {
+                    return false;
                 }
 
-                if (DFS(graph, v, color, color[v]) == false) {
-                    return false;
-         
+                if (color[v] == -1) {
+                    if (color[u] == 1) {
+                        color[v] = 0;
+                        q.push({v, color[v]});
+                    } else if (color[u] == 0) {
+                        color[v] = 1;
+                        q.push({v, color[v]});
+                    }
                 }
             }
         }
@@ -36,7 +46,7 @@ public:
         for (int i = 0; i < graph.size(); i++) {
 
             if (color[i] == -1) {
-                if (DFS(graph, i, color, 1) ==
+                if (BFS(graph, i, color, 1) ==
                     false) { // iska mtlb hh graph bipartite nhi hh
                     return false;
                 }
