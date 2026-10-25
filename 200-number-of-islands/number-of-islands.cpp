@@ -1,7 +1,7 @@
 class Solution {
 public:
-    void BFS(vector<vector<char>>& grid,
-             vector<vector<int>>& visited, int i, int j) {
+    void BFS(vector<vector<char>>& grid, vector<vector<int>>& visited, int i,
+             int j) {
 
         visited[i][j] = 1;
         queue<pair<int, int>> q;
@@ -19,27 +19,27 @@ public:
             int j = P.second;
 
             // top
-            if (i > 0 && grid[i-1][j] == '1' && !visited[i-1][j]) {
-                visited[i-1][j] = 1;
-                q.push({i-1, j});
+            if (i > 0 && grid[i - 1][j] == '1' && !visited[i - 1][j]) {
+                visited[i - 1][j] = 1;
+                q.push({i - 1, j});
             }
 
             // down
-            if (i < n-1 && grid[i+1][j] == '1' && !visited[i+1][j]) {
-                visited[i+1][j] = 1;
-                q.push({i+1, j});
+            if (i < n - 1 && grid[i + 1][j] == '1' && !visited[i + 1][j]) {
+                visited[i + 1][j] = 1;
+                q.push({i + 1, j});
             }
 
             // left
-            if (j > 0 && grid[i][j-1] == '1' && !visited[i][j-1]) {
-                visited[i][j-1] = 1;
-                q.push({i, j-1});
+            if (j > 0 && grid[i][j - 1] == '1' && !visited[i][j - 1]) {
+                visited[i][j - 1] = 1;
+                q.push({i, j - 1});
             }
 
             // right
-            if (j < m-1 && grid[i][j+1] == '1' && !visited[i][j+1]) {
-                visited[i][j+1] = 1;
-                q.push({i, j+1});
+            if (j < m - 1 && grid[i][j + 1] == '1' && !visited[i][j + 1]) {
+                visited[i][j + 1] = 1;
+                q.push({i, j + 1});
             }
         }
     }
@@ -47,12 +47,14 @@ public:
     int numIslands(vector<vector<char>>& grid) {
 
         int n = grid.size();
-        if (n == 0) return 0;
+        if (n == 0)
+            return 0;
 
         int m = grid[0].size();
         vector<vector<int>> visited(n, vector<int>(m, 0));
 
         int count = 0;
+
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
