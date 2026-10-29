@@ -23,12 +23,13 @@ public:
 
             if (i < m - 1 && j == n - 1 && !visited[i + 1][j]) {
                 result[i + 1][j] = '.';
-                visited[i + 1][j] = true;
+                visited[i][j + 1] = true;
                 q.push({i + 1, j});
             }
         }
 
         vector<string> ans;
+
         for (int i = 0; i < m; i++) {
             string temp = "";
             for (int j = 0; j < n; j++) {
@@ -37,7 +38,6 @@ public:
 
             ans.push_back(temp);
         }
-
         return ans;
     }
 };
