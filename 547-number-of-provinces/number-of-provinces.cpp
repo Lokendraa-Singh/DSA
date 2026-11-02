@@ -1,50 +1,48 @@
 class Solution {
 public:
-    void BFS(unordered_map<int, vector<int>>& adj, int u,
-             vector<bool>& visited) {
-
+    void BFS(unordered_map<int, vector<int>>& mpp, vector<bool>& visited,
+             int i) {
+        visited[i] = true;
         queue<int> q;
-        visited[u] = true;
-        q.push(u);
+        q.push(i);
 
         while (!q.empty()) {
             int u = q.front();
             q.pop();
 
-            for (int& v : adj[u]) {
-
+            for (int &v : mpp[u]) {
                 if (!visited[v]) {
-                    BFS(adj,v,visited);
+                    visited[v]=true;
+                    q.push(v);
                 }
             }
         }
     }
+
     int findCircleNum(vector<vector<int>>& isConnected) {
 
-        int n = isConnected.size();
-        unordered_map<int, vector<int>> adj;
+        unordered_map<int, vector<int>> mpp;
 
-        // make graph
-        for (int i = 0; i < n; i++) {
-
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < isConnected.size(); i++) {
+            for (int j = 0; j < isConnected.size(); j++) {
 
                 if (isConnected[i][j] == 1) {
-                    adj[i].push_back(j);
-                    adj[j].push_back(i);
+                    mpp[i].push_back(j);
+                    mpp[j].push_back(i);
                 }
             }
         }
 
-        vector<bool> visited(n, false);
-        int count = 0; // provinces ko count krne ke liye
-        for (int i = 0; i < n; i++) {
+        vector<bool> visited(isConnected.size(), false);
+        int components = 0;
+
+        for (int i = 0; i < isConnected.size(); i++) {
             if (!visited[i]) {
-                BFS(adj, i, visited);
-                count++;
+                BFS(mpp, visited, i);
+                components++;
             }
         }
 
-        return count;
+        return components;
     }
 };
